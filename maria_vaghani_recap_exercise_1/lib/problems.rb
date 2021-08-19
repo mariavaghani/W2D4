@@ -4,22 +4,37 @@
 #
 # Example:
 #
-# all_vowel_pairs(["goat", "action", "tear", "impromptu", "tired", "europe"])   # => ["action europe", "tear impromptu"]
 def all_vowel_pairs(words)
-
+    vowels = ["e", "a", "i", "o", "u"]
+    result = []
+    words.each_with_index do |first_word, first_word_idx|
+        words.each_with_index do |second_word, second_word_idx|
+            str = first_word + " " + second_word
+            if second_word_idx > first_word_idx && (str.split("") & vowels).length == vowels.length
+                result << str
+            end
+        end
+    end
+    result
 end
 
+# p all_vowel_pairs(["goat", "action", "tear", "impromptu", "tired", "europe"])   # => ["action europe", "tear impromptu"]
 
 # Write a method, composite?, that takes in a number and returns a boolean indicating if the number
 # has factors besides 1 and itself
 #
 # Example:
 #
-# composite?(9)     # => true
-# composite?(13)    # => false
 def composite?(num)
-
+    return false if num == 1
+    (2...num).any? { |factor| num % factor == 0 }
 end
+
+# p composite?(9)     # => true
+# p composite?(13)    # => false
+# p composite?(-6)    # => false?
+# p composite?(1)    # => false
+# p composite?(2)    # => false
 
 
 # A bigram is a string containing two letters.
@@ -29,12 +44,19 @@ end
 #
 # Examples:
 #
-# find_bigrams("the theater is empty", ["cy", "em", "ty", "ea", "oo"])  # => ["em", "ty", "ea"]
-# find_bigrams("to the moon and back", ["ck", "oo", "ha", "at"])        # => ["ck", "oo"]
 def find_bigrams(str, bigrams)
-
+    result = []
+    bigrams.each do |bigram|
+        bigram << result if 
+    end
 end
 
+str = "ha"
+another_str = "to the moon and back"
+
+p another_str.split(str) 
+p find_bigrams("to the moon and back", ["ck", "oo", "ha", "at"])        # => ["ck", "oo"]
+p find_bigrams("the theater is empty", ["cy", "em", "ty", "ea", "oo"])  # => ["em", "ty", "ea"]
 class Hash
     # Write a method, Hash#my_select, that takes in an optional proc argument
     # The method should return a new hash containing the key-value pairs that return
