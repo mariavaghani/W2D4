@@ -26,7 +26,7 @@ end
 # Example:
 #
 def composite?(num)
-    return false if num == 1
+    return false if num <= 1
     (2...num).any? { |factor| num % factor == 0 }
 end
 
@@ -71,16 +71,17 @@ class Hash
     #
     def my_select(&prc)
         prc ||= Proc.new { |k, v| k == v }
-
-        self.select { |k, v| prc.call(k,v)}
+        new_hash = {}
+        self.each { |k, v| new_hash[k] = v if prc.call(k,v)}
+        new_hash
     end
 end
-# hash_1 = {x: 7, y: 1, z: 8}
-# p hash_1.my_select { |k, v| v.odd? }          # => {x: 7, y: 1}
+hash_1 = {x: 7, y: 1, z: 8}
+p hash_1.my_select { |k, v| v.odd? }          # => {x: 7, y: 1}
 
-# hash_2 = {4=>4, 10=>11, 12=>3, 5=>6, 7=>8}
-# p hash_2.my_select { |k, v| k + 1 == v }      # => {10=>11, 5=>6, 7=>8})
-# p hash_2.my_select                            # => {4=>4}
+hash_2 = {4=>4, 10=>11, 12=>3, 5=>6, 7=>8}
+p hash_2.my_select { |k, v| k + 1 == v }      # => {10=>11, 5=>6, 7=>8})
+p hash_2.my_select                            # => {4=>4}
 
 class String
     # Write a method, String#substrings, that takes in a optional length argument
