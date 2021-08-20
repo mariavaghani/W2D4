@@ -15,6 +15,9 @@ class Board
     end
 
     def add(token, stack_idx)
+        if stack_idx < 0 || stack_idx >= @stacks.length
+            return false
+        end
         if @stacks[stack_idx].length < @max_height
             @stacks[stack_idx].push(token)
             return true
@@ -23,14 +26,28 @@ class Board
         end
     end
 
-    def method_name
-        
+    def vertical_winner?(token)
+        return true if @stacks.any? { |stack| stack.all?(token) && stack.length == @max_height }
+        false
+    end
+
+    def horizontal_winner?(token)
+
+        (0...@max_height).each do |row_index|
+            return true if (0...@stacks.length).all? { |stack_idx| @stacks[stack_idx][row_index] == token }
+        end
+        # return true if (0...@stacks.length).all? { |stack_idx| (0...@max_height).any?{|pos_id| @stacks[stack_idx][pos_id] == token } }
+        false
     end
 
 
     # This Board#print method is given for free and does not need to be modified
     # It is used to make your game playable.
     def print
-        @stacks.each { |stack| p stack }
+        @stacks.each { |stack| puts stack.join(" ") }
+    end
+
+    def winner?(token)
+        horizontal_winner?(token) || vertical_winner?(token)
     end
 end

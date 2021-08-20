@@ -3,4 +3,12 @@
 
 require_relative "connect_tac_toe"
 
-ConnectTacToe.new(7, 6).play
+puts "++++++++++++ Welcome to Connect Tac TOe +++++++++++++++"
+puts "How many stacks would you like to play?"
+num_of_stacks = gets.chomp.to_i
+puts "What the maximum stack should be?"
+max_height = gets.chomp.to_i
+
+puts "Awesome, let's play!"
+
+ConnectTacToe.new(num_of_stacks, max_height).play
